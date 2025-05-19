@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const indexRoutes = require("./router/index");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const qs = require("qs");
+
 dotenv.config();
 
 const runServer = async () => {
@@ -11,6 +13,8 @@ const runServer = async () => {
   app.use(cors({ origin: "http://localhost:5001" }));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.set("query parser", (str) => qs.parse(str));
+
   app.use("/api", indexRoutes);
 
   try {
